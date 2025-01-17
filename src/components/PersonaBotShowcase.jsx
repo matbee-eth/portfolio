@@ -1,338 +1,242 @@
 import React from 'react';
 import {
+  Psychology,
+  Chat,
+  Memory,
+  Analytics,
+  Hub,
+  Settings,
+  Storage,
+  Speed,
+} from '@mui/icons-material';
+import {
   Box,
-  Container,
-  Typography,
   Paper,
+  Typography,
   Grid,
   Chip,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Divider,
 } from '@mui/material';
-import {
-  Psychology,
-  Memory,
-  SmartToy,
-  Hub,
-  Code,
-  Speed,
-  AutoAwesome,
-  School,
-  EmojiEmotions,
-  Groups,
-} from '@mui/icons-material';
+import { BaseShowcase } from './BaseShowcase';
 
-const FeatureSection = ({ title, icon: Icon, features }) => (
-  <Paper sx={{ p: 3, height: '100%' }}>
-    <Box display="flex" alignItems="center" mb={2}>
-      <Icon sx={{ mr: 1 }} />
-      <Typography variant="h6">{title}</Typography>
-    </Box>
-    <List>
-      {features.map((feature, index) => (
-        <ListItem key={index}>
-          <ListItemText primary={feature} />
-        </ListItem>
-      ))}
-    </List>
-  </Paper>
-);
-
-const TechStack = ({ technologies }) => (
-  <Box sx={{ mb: 4 }}>
-    <Typography variant="h6" gutterBottom>
-      Technology Stack
+const ChatSystem = () => (
+  <Box mt={8}>
+    <Typography variant="h4" gutterBottom>
+      Persona Chat System
     </Typography>
-    <Box display="flex" flexWrap="wrap" gap={1}>
-      {technologies.map((tech, index) => (
-        <Chip
-          key={index}
-          label={tech}
-          variant="outlined"
-          color="primary"
-        />
-      ))}
-    </Box>
+    <Paper sx={{ p: 4, backgroundColor: 'grey.50' }}>
+      <Grid container spacing={3}>
+        {/* Input Processing */}
+        <Grid item xs={12}>
+          <Paper
+            elevation={3}
+            sx={{
+              p: 2,
+              backgroundColor: 'primary.dark',
+              color: 'white',
+              mb: 3,
+            }}
+          >
+            <Typography variant="h6" align="center" gutterBottom>
+              Input Processing
+            </Typography>
+            <Box display="flex" justifyContent="center" gap={2} flexWrap="wrap">
+              <Chip label="Message Analysis" size="small" />
+              <Chip label="Context Management" size="small" />
+              <Chip label="Persona Selection" size="small" />
+            </Box>
+          </Paper>
+        </Grid>
+
+        {/* Response Generation */}
+        <Grid item xs={12} md={6}>
+          <Paper
+            elevation={3}
+            sx={{
+              p: 2,
+              backgroundColor: 'success.main',
+              color: 'white',
+              height: '100%',
+            }}
+          >
+            <Typography variant="h6" align="center" gutterBottom>
+              Response Generation
+            </Typography>
+            <Box component="ul" sx={{ pl: 2 }}>
+              <Box component="li" sx={{ mb: 1 }}>Persona Alignment</Box>
+              <Box component="li" sx={{ mb: 1 }}>Content Creation</Box>
+              <Box component="li" sx={{ mb: 1 }}>Style Adaptation</Box>
+              <Box component="li" sx={{ mb: 1 }}>Response Validation</Box>
+            </Box>
+          </Paper>
+        </Grid>
+
+        {/* Output Processing */}
+        <Grid item xs={12} md={6}>
+          <Paper
+            elevation={3}
+            sx={{
+              p: 2,
+              backgroundColor: 'info.main',
+              color: 'white',
+              height: '100%',
+            }}
+          >
+            <Typography variant="h6" align="center" gutterBottom>
+              Output Processing
+            </Typography>
+            <Box component="ul" sx={{ pl: 2 }}>
+              <Box component="li" sx={{ mb: 1 }}>Format Adaptation</Box>
+              <Box component="li" sx={{ mb: 1 }}>Quality Check</Box>
+              <Box component="li" sx={{ mb: 1 }}>Style Enhancement</Box>
+              <Box component="li" sx={{ mb: 1 }}>Response Delivery</Box>
+            </Box>
+          </Paper>
+        </Grid>
+      </Grid>
+    </Paper>
   </Box>
 );
 
-const AgentArchitecture = () => (
-  <Paper sx={{ p: 4, backgroundColor: 'grey.50' }}>
-    <Grid container spacing={4}>
-      {/* Control Room */}
-      <Grid item xs={12}>
-        <Paper
-          elevation={3}
-          sx={{
-            p: 2,
-            backgroundColor: 'primary.main',
-            color: 'white',
-            textAlign: 'center',
-          }}
-        >
-          <Hub sx={{ fontSize: 40 }} />
-          <Typography variant="h6">Control Room</Typography>
-          <Typography variant="body2">Orchestrates System Components</Typography>
-        </Paper>
-      </Grid>
-
-      {/* Agent Councils */}
-      <Grid item xs={12} md={4}>
-        <Paper
-          elevation={2}
-          sx={{ p: 2, height: '100%', backgroundColor: 'success.light', color: 'white' }}
-        >
-          <Box textAlign="center">
-            <EmojiEmotions sx={{ fontSize: 30 }} />
-            <Typography variant="h6">Emotional Council</Typography>
-            <List dense>
-              {['Joy', 'Sadness', 'Anger', 'Anxiety', 'Neutral'].map((emotion) => (
-                <ListItem key={emotion}>
-                  <ListItemText primary={emotion} />
-                </ListItem>
-              ))}
-            </List>
-          </Box>
-        </Paper>
-      </Grid>
-
-      <Grid item xs={12} md={4}>
-        <Paper
-          elevation={2}
-          sx={{ p: 2, height: '100%', backgroundColor: 'info.light', color: 'white' }}
-        >
-          <Box textAlign="center">
-            <Psychology sx={{ fontSize: 30 }} />
-            <Typography variant="h6">Theory Council</Typography>
-            <List dense>
-              {['Attachment', 'Social Penetration', 'Uncertainty Reduction', 'Emotional Intelligence'].map((theory) => (
-                <ListItem key={theory}>
-                  <ListItemText primary={theory} />
-                </ListItem>
-              ))}
-            </List>
-          </Box>
-        </Paper>
-      </Grid>
-
-      <Grid item xs={12} md={4}>
-        <Paper
-          elevation={2}
-          sx={{ p: 2, height: '100%', backgroundColor: 'warning.light', color: 'white' }}
-        >
-          <Box textAlign="center">
-            <Memory sx={{ fontSize: 30 }} />
-            <Typography variant="h6">Memory System</Typography>
-            <List dense>
-              {['Emotional Memory', 'Pattern Recognition', 'Experience Learning', 'Relationship History'].map((memory) => (
-                <ListItem key={memory}>
-                  <ListItemText primary={memory} />
-                </ListItem>
-              ))}
-            </List>
-          </Box>
-        </Paper>
-      </Grid>
-    </Grid>
-  </Paper>
-);
-
-const PersonalitySystem = () => (
-  <Paper sx={{ p: 4, mt: 4 }}>
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-      <Typography variant="h6" gutterBottom>
-        Personality Development System
-      </Typography>
-      
-      {/* Learning Process */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
-        {[
-          { icon: Memory, label: 'Experience Storage', description: 'Records interactions and outcomes' },
-          { icon: Psychology, label: 'Pattern Analysis', description: 'Identifies behavioral patterns' },
-          { icon: School, label: 'Adaptation', description: 'Adjusts responses based on learning' },
-          { icon: AutoAwesome, label: 'Personality Evolution', description: 'Develops unique traits' },
-        ].map(({ icon: Icon, label, description }) => (
+const TechnicalFeatures = () => (
+  <Box mt={8}>
+    <Typography variant="h4" gutterBottom>
+      Technical Features
+    </Typography>
+    <Grid container spacing={3}>
+      {[
+        {
+          title: "Memory System",
+          features: ["Context tracking", "State persistence", "History analysis"],
+          color: "success.main"
+        },
+        {
+          title: "Real-time Processing",
+          features: ["Stream handling", "Async operations", "Queue management"],
+          color: "warning.main"
+        },
+        {
+          title: "Analytics Engine",
+          features: ["Performance metrics", "Usage patterns", "Quality analysis"],
+          color: "info.main"
+        }
+      ].map(({ title, features, color }) => (
+        <Grid item xs={12} md={4} key={title}>
           <Paper
-            key={label}
+            elevation={3}
             sx={{
               p: 2,
-              flex: '1 1 200px',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 1,
+              height: '100%',
+              backgroundColor: color,
+              color: 'white',
             }}
           >
-            <Icon color="primary" />
-            <Typography variant="subtitle1" align="center">
-              {label}
+            <Typography variant="h6" align="center" gutterBottom>
+              {title}
             </Typography>
-            <Typography variant="body2" color="text.secondary" align="center">
-              {description}
-            </Typography>
+            <Box component="ul" sx={{ pl: 2 }}>
+              {features.map((feature, index) => (
+                <Box component="li" key={index} sx={{ mb: 1 }}>
+                  {feature}
+                </Box>
+              ))}
+            </Box>
           </Paper>
-        ))}
-      </Box>
-    </Box>
-  </Paper>
+        </Grid>
+      ))}
+    </Grid>
+  </Box>
 );
 
-const PersonaBotShowcase = () => {
+const SystemVisuals = () => (
+  <>
+    <ChatSystem />
+    <TechnicalFeatures />
+  </>
+);
+
+const PersonaBotShowcase = ({ media }) => {
   const technologies = [
     'Python',
-    'AutoGen',
+    'FastAPI',
+    'React',
+    'OpenAI',
     'LangChain',
-    'Neural Networks',
-    'Natural Language Processing',
-    'Machine Learning',
+    'Redis',
+    'PostgreSQL',
+    'WebSocket',
   ];
 
-  const features = {
-    emotional: [
-      'Multi-agent emotional processing',
-      'Dynamic state management',
-      'Emotionally authentic responses',
-      'Context-aware adaptation',
-      'Emotional memory system',
-    ],
-    psychological: [
-      'Attachment Theory integration',
-      'Social Penetration modeling',
-      'Uncertainty Reduction Theory',
-      'Emotional Intelligence framework',
-      'Relationship development patterns',
-    ],
-    adaptive: [
-      'Experience-based learning',
-      'Memory-driven adaptations',
-      'Emergent behavior patterns',
-      'Natural psychological growth',
-      'Personality evolution',
-    ],
-    technical: [
-      'Multi-agent architecture',
-      'Control vector system',
-      'State management',
-      'Pattern recognition',
-      'Memory clustering',
-    ],
-  };
+  const featureSections = [
+    {
+      title: 'Persona Management',
+      icon: Psychology,
+      features: [
+        'Dynamic persona creation',
+        'Personality adaptation',
+        'Context awareness',
+        'Memory management',
+        'Behavioral consistency',
+      ],
+    },
+    {
+      title: 'Chat Features',
+      icon: Chat,
+      features: [
+        'Real-time responses',
+        'Context preservation',
+        'Multi-turn dialogue',
+        'Stream processing',
+        'Error recovery',
+      ],
+    },
+    {
+      title: 'System Features',
+      icon: Memory,
+      features: [
+        'State management',
+        'Async processing',
+        'Error handling',
+        'Performance monitoring',
+        'Data persistence',
+      ],
+    },
+    {
+      title: 'Analytics',
+      icon: Analytics,
+      features: [
+        'Usage tracking',
+        'Performance metrics',
+        'Quality analysis',
+        'Pattern detection',
+        'Optimization insights',
+      ],
+    },
+  ];
 
   return (
-    <Container maxWidth="lg" sx={{ py: 8 }}>
-      {/* Project Header */}
-      <Box textAlign="center" mb={8}>
-        <Typography variant="h2" component="h1" gutterBottom>
-          Adaptive Personality AI System
-        </Typography>
-        <Typography variant="h5" color="text.secondary" paragraph>
-          A sophisticated AI character system combining emotional intelligence, psychological theory, and adaptive personality development.
-        </Typography>
-      </Box>
-
-      {/* Technology Stack */}
-      <TechStack technologies={technologies} />
-
-      <Divider sx={{ my: 6 }} />
-
-      {/* Agent Architecture */}
-      <Box mb={8}>
-        <Typography variant="h4" gutterBottom>
-          Multi-Agent Architecture
-        </Typography>
-        <AgentArchitecture />
-      </Box>
-
-      {/* Personality System */}
-      <Box mb={8}>
-        <Typography variant="h4" gutterBottom>
-          Personality Development
-        </Typography>
-        <PersonalitySystem />
-      </Box>
-
-      {/* Features Grid */}
-      <Grid container spacing={4}>
-        <Grid item xs={12} md={6}>
-          <FeatureSection
-            title="Emotional Intelligence"
-            icon={EmojiEmotions}
-            features={features.emotional}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <FeatureSection
-            title="Psychological Framework"
-            icon={Psychology}
-            features={features.psychological}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <FeatureSection
-            title="Adaptive Learning"
-            icon={School}
-            features={features.adaptive}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <FeatureSection
-            title="Technical Architecture"
-            icon={Code}
-            features={features.technical}
-          />
-        </Grid>
-      </Grid>
-
-      {/* Technical Details */}
-      <Box mt={8}>
-        <Typography variant="h4" gutterBottom>
-          Technical Implementation
-        </Typography>
-        <Paper sx={{ p: 4 }}>
-          <List>
-            <ListItem>
-              <ListItemIcon>
-                <Hub />
-              </ListItemIcon>
-              <ListItemText 
-                primary="Multi-Agent System" 
-                secondary="Implements a 'society of mind' architecture using AutoGen for coordinated agent interactions"
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <Memory />
-              </ListItemIcon>
-              <ListItemText 
-                primary="Advanced Memory System" 
-                secondary="Sophisticated emotional memory processing with pattern recognition and clustering"
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <Psychology />
-              </ListItemIcon>
-              <ListItemText 
-                primary="Psychological Integration" 
-                secondary="Deep integration of psychological theories for natural personality development"
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <Speed />
-              </ListItemIcon>
-              <ListItemText 
-                primary="Dynamic Adaptation" 
-                secondary="Real-time personality evolution through experience-based learning and memory"
-              />
-            </ListItem>
-          </List>
-        </Paper>
-      </Box>
-    </Container>
+    <BaseShowcase
+      title="Persona Chat Bot"
+      description="Advanced chat system with dynamic persona management and real-time conversation capabilities powered by AI."
+      media={media}
+      technologies={technologies}
+      featureSections={featureSections}
+      implementation={{
+        architecture: [
+          "Multi-persona management system",
+          "Real-time chat engine",
+          "Context preservation framework",
+          "Analytics pipeline",
+          "State management system"
+        ],
+        requirements: [
+          { name: "Python", details: "3.8+ with async support" },
+          { name: "Database", details: "PostgreSQL for data storage" },
+          { name: "Cache", details: "Redis for state management" },
+          { name: "Memory", details: "8GB+ RAM recommended" }
+        ]
+      }}
+      pipelineComponent={<SystemVisuals />}
+    />
   );
 };
 

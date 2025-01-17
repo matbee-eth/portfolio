@@ -27,7 +27,7 @@ import PosePlacerPage from './routes/PosePlacerPage';
 import Object3DPage from './routes/Object3DPage';
 import WebpackGraphPage from './routes/WebpackGraphPage';
 
-function FeaturedProject({ title, description, icon, route, tags, techStack, githubUrl }) {
+function FeaturedProject({ title, description, icon, route, tags, techStack, githubUrl, features, implementation, topics }) {
   const navigate = useNavigate();
   
   return (
@@ -39,6 +39,9 @@ function FeaturedProject({ title, description, icon, route, tags, techStack, git
       tags={tags}
       techStack={techStack}
       githubUrl={githubUrl}
+      features={features}
+      implementation={implementation}
+      topics={topics}
     />
   );
 };

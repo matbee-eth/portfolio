@@ -1,16 +1,10 @@
 import React from 'react';
 import {
   Box,
-  Container,
-  Typography,
   Paper,
+  Typography,
   Grid,
   Chip,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Divider,
 } from '@mui/material';
 import {
   ThreeDRotation,
@@ -24,113 +18,98 @@ import {
   Tune,
   Analytics,
 } from '@mui/icons-material';
+import { BaseShowcase } from './BaseShowcase';
 
-const FeatureSection = ({ title, icon: Icon, features }) => (
-  <Paper sx={{ p: 3, height: '100%' }}>
-    <Box display="flex" alignItems="center" mb={2}>
-      <Icon sx={{ mr: 1 }} />
-      <Typography variant="h6">{title}</Typography>
-    </Box>
-    <List>
-      {features.map((feature, index) => (
-        <ListItem key={index}>
-          <ListItemText primary={feature} />
-        </ListItem>
-      ))}
-    </List>
-  </Paper>
-);
-
-const TechStack = ({ technologies }) => (
-  <Box sx={{ mb: 4 }}>
-    <Typography variant="h6" gutterBottom>
-      Technology Stack
+const PoseSystem = () => (
+  <Box mt={8}>
+    <Typography variant="h4" gutterBottom>
+      Pose Placement System
     </Typography>
-    <Box display="flex" flexWrap="wrap" gap={1}>
-      {technologies.map((tech, index) => (
-        <Chip
-          key={index}
-          label={tech}
-          variant="outlined"
-          color="primary"
-        />
-      ))}
-    </Box>
+    <Paper sx={{ p: 4, backgroundColor: 'grey.50' }}>
+      <Box sx={{ position: 'relative' }}>
+        {/* Input Processing */}
+        <Paper
+          elevation={3}
+          sx={{
+            p: 2,
+            mb: 4,
+            backgroundColor: 'primary.dark',
+            color: 'white',
+          }}
+        >
+          <Typography variant="h6" align="center">Input Processing</Typography>
+          <Box display="flex" justifyContent="center" gap={2} mt={1}>
+            <Chip label="Depth Map" size="small" />
+            <Chip label="Floor Detection" size="small" />
+            <Chip label="Surface Analysis" size="small" />
+          </Box>
+        </Paper>
+
+        {/* Pose Generation */}
+        <Paper
+          elevation={3}
+          sx={{
+            p: 2,
+            mb: 4,
+            backgroundColor: 'primary.main',
+            color: 'white',
+          }}
+        >
+          <Typography variant="h6" align="center">Pose Generation</Typography>
+          <Box display="flex" justifyContent="center" gap={2} mt={1}>
+            <Chip label="3D Mesh Creation" size="small" />
+            <Chip label="Scale Adjustment" size="small" />
+            <Chip label="Position Mapping" size="small" />
+          </Box>
+        </Paper>
+
+        {/* Interactive Placement */}
+        <Paper
+          elevation={3}
+          sx={{
+            p: 2,
+            backgroundColor: 'primary.light',
+            color: 'white',
+          }}
+        >
+          <Typography variant="h6" align="center">Interactive Placement</Typography>
+          <Box display="flex" justifyContent="center" gap={2} mt={1}>
+            <Chip label="Real-time Updates" size="small" />
+            <Chip label="Collision Detection" size="small" />
+            <Chip label="User Controls" size="small" />
+          </Box>
+        </Paper>
+      </Box>
+    </Paper>
   </Box>
 );
 
-const PoseSystem = () => (
-  <Paper sx={{ p: 4, backgroundColor: 'grey.50' }}>
-    <Box sx={{ position: 'relative' }}>
-      {/* Input Processing */}
-      <Paper
-        elevation={3}
-        sx={{
-          p: 2,
-          mb: 4,
-          backgroundColor: 'primary.dark',
-          color: 'white',
-        }}
-      >
-        <Typography variant="h6" align="center">Input Processing</Typography>
-        <Box display="flex" justifyContent="center" gap={2} mt={1}>
-          <Chip label="Depth Map" size="small" />
-          <Chip label="Floor Detection" size="small" />
-          <Chip label="Surface Analysis" size="small" />
-        </Box>
-      </Paper>
-
-      {/* Pose Generation */}
-      <Paper
-        elevation={3}
-        sx={{
-          p: 2,
-          mb: 4,
-          backgroundColor: 'primary.main',
-          color: 'white',
-        }}
-      >
-        <Typography variant="h6" align="center">Pose Generation</Typography>
-        <Box display="flex" justifyContent="center" gap={2} mt={1}>
-          <Chip label="3D Mesh Creation" size="small" />
-          <Chip label="Scale Adjustment" size="small" />
-          <Chip label="Position Mapping" size="small" />
-        </Box>
-      </Paper>
-
-      {/* Interactive Placement */}
-      <Paper
-        elevation={3}
-        sx={{
-          p: 2,
-          backgroundColor: 'primary.light',
-          color: 'white',
-        }}
-      >
-        <Typography variant="h6" align="center">Interactive Placement</Typography>
-        <Box display="flex" justifyContent="center" gap={2} mt={1}>
-          <Chip label="Real-time Updates" size="small" />
-          <Chip label="Collision Detection" size="small" />
-          <Chip label="Visual Feedback" size="small" />
-        </Box>
-      </Paper>
-    </Box>
-  </Paper>
-);
-
 const TechnicalFeatures = () => (
-  <Paper sx={{ p: 4, mt: 4 }}>
-    <Typography variant="h6" gutterBottom>
+  <Box mt={8}>
+    <Typography variant="h4" gutterBottom>
       Technical Features
     </Typography>
-    <Grid container spacing={2}>
+    <Grid container spacing={3}>
       {[
-        { label: 'Depth Processing', color: 'success.light', content: ['Depth map analysis', 'Floor segmentation', 'Surface normal calculation'] },
-        { label: 'Pose Management', color: 'warning.light', content: ['3D mesh generation', 'Scale normalization', 'Position validation'] },
-        { label: 'Interaction System', color: 'info.light', content: ['Real-time updates', 'Visibility checks', 'User feedback'] },
-      ].map(({ label, color, content }) => (
-        <Grid item xs={12} md={4} key={label}>
+        {
+          title: "Depth Analysis",
+          features: ["Scene understanding", "Surface detection", "Spatial mapping"],
+          color: "success.main"
+        },
+        {
+          title: "Real-time Processing",
+          features: ["Interactive updates", "Performance optimization", "Async operations"],
+          color: "warning.main"
+        },
+        {
+          title: "User Interaction",
+          features: ["Intuitive controls", "Visual feedback", "Undo/Redo support"],
+          color: "info.main"
+        }
+      ].map(({ title, features, color }) => (
+        <Grid item xs={12} md={4} key={title}>
           <Paper
+            elevation={3}
             sx={{
               p: 2,
               height: '100%',
@@ -138,176 +117,111 @@ const TechnicalFeatures = () => (
               color: 'white',
             }}
           >
-            <Typography variant="subtitle1" gutterBottom align="center">
-              {label}
+            <Typography variant="h6" align="center" gutterBottom>
+              {title}
             </Typography>
-            <List dense>
-              {content.map((item) => (
-                <ListItem key={item}>
-                  <ListItemText primary={item} />
-                </ListItem>
+            <Box component="ul" sx={{ pl: 2 }}>
+              {features.map((feature, index) => (
+                <Box component="li" key={index} sx={{ mb: 1 }}>
+                  {feature}
+                </Box>
               ))}
-            </List>
+            </Box>
           </Paper>
         </Grid>
       ))}
     </Grid>
-  </Paper>
+  </Box>
 );
 
-const PosePlacerShowcase = () => {
+const SystemVisuals = () => (
+  <>
+    <PoseSystem />
+    <TechnicalFeatures />
+  </>
+);
+
+const PosePlacerShowcase = ({ media }) => {
   const technologies = [
-    'React',
-    'TypeScript',
     'Three.js',
+    'React Three Fiber',
+    'TypeScript',
     'WebGL',
-    'Hugging Face',
-    'TailwindCSS',
+    'TensorFlow.js',
+    'WebAssembly',
   ];
 
-  const features = {
-    visualization: [
-      '3D scene rendering',
-      'Depth map visualization',
-      'Real-time mesh updates',
-      'Interactive camera controls',
-      'Surface normal display',
-    ],
-    processing: [
-      'Depth map analysis',
-      'Floor segmentation',
-      'Surface normal calculation',
-      'Mesh generation',
-      'Scale normalization',
-    ],
-    interaction: [
-      'Drag-and-drop placement',
-      'Real-time position updates',
-      'Collision detection',
-      'Visibility checking',
-      'User feedback system',
-    ],
-    technical: [
-      'WebGL optimization',
-      'Memory management',
-      'Performance monitoring',
-      'Error handling',
-      'State synchronization',
-    ],
-  };
+  const featureSections = [
+    {
+      title: '3D Features',
+      icon: ThreeDRotation,
+      features: [
+        'Real-time 3D rendering',
+        'Dynamic mesh manipulation',
+        'Custom shader effects',
+        'Lighting optimization',
+        'Camera controls',
+      ],
+    },
+    {
+      title: 'Pose System',
+      icon: Animation,
+      features: [
+        'Pose detection',
+        'Position adjustment',
+        'Scale manipulation',
+        'Rotation control',
+        'Animation support',
+      ],
+    },
+    {
+      title: 'Interaction',
+      icon: TouchApp,
+      features: [
+        'Drag and drop placement',
+        'Interactive controls',
+        'Real-time feedback',
+        'Multi-touch support',
+        'Gesture recognition',
+      ],
+    },
+    {
+      title: 'Technical Features',
+      icon: Tune,
+      features: [
+        'WebGL optimization',
+        'Memory management',
+        'Performance monitoring',
+        'Error handling',
+        'State persistence',
+      ],
+    },
+  ];
 
   return (
-    <Container maxWidth="lg" sx={{ py: 8 }}>
-      {/* Project Header */}
-      <Box textAlign="center" mb={8}>
-        <Typography variant="h2" component="h1" gutterBottom>
-          3D Pose Placement System
-        </Typography>
-        <Typography variant="h5" color="text.secondary" paragraph>
-          Advanced 3D pose placement system with depth map analysis, real-time interaction, and intelligent surface detection.
-        </Typography>
-      </Box>
-
-      {/* Technology Stack */}
-      <TechStack technologies={technologies} />
-
-      <Divider sx={{ my: 6 }} />
-
-      {/* Pose System */}
-      <Box mb={8}>
-        <Typography variant="h4" gutterBottom>
-          System Architecture
-        </Typography>
-        <PoseSystem />
-      </Box>
-
-      {/* Technical Features */}
-      <Box mb={8}>
-        <Typography variant="h4" gutterBottom>
-          Technical Features
-        </Typography>
-        <TechnicalFeatures />
-      </Box>
-
-      {/* Features Grid */}
-      <Grid container spacing={4}>
-        <Grid item xs={12} md={6}>
-          <FeatureSection
-            title="3D Visualization"
-            icon={ThreeDRotation}
-            features={features.visualization}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <FeatureSection
-            title="Depth Processing"
-            icon={Layers}
-            features={features.processing}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <FeatureSection
-            title="User Interaction"
-            icon={TouchApp}
-            features={features.interaction}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <FeatureSection
-            title="Technical Features"
-            icon={Tune}
-            features={features.technical}
-          />
-        </Grid>
-      </Grid>
-
-      {/* Technical Details */}
-      <Box mt={8}>
-        <Typography variant="h4" gutterBottom>
-          Technical Implementation
-        </Typography>
-        <Paper sx={{ p: 4 }}>
-          <List>
-            <ListItem>
-              <ListItemIcon>
-                <Camera />
-              </ListItemIcon>
-              <ListItemText 
-                primary="Depth Analysis" 
-                secondary="Advanced depth map processing with floor segmentation and surface normal calculation"
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <Animation />
-              </ListItemIcon>
-              <ListItemText 
-                primary="Real-time Interaction" 
-                secondary="Smooth pose manipulation with instant feedback and collision detection"
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <Hub />
-              </ListItemIcon>
-              <ListItemText 
-                primary="System Integration" 
-                secondary="Seamless integration of Three.js, React, and depth processing algorithms"
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <Analytics />
-              </ListItemIcon>
-              <ListItemText 
-                primary="Performance" 
-                secondary="Optimized rendering and efficient memory management for smooth operation"
-              />
-            </ListItem>
-          </List>
-        </Paper>
-      </Box>
-    </Container>
+    <BaseShowcase
+      title="3D Pose Placer"
+      description="Sophisticated 3D pose placement system with depth analysis and real-time interaction capabilities."
+      media={media}
+      technologies={technologies}
+      featureSections={featureSections}
+      implementation={{
+        architecture: [
+          "WebGL-based rendering engine",
+          "Real-time physics system",
+          "Interactive control system",
+          "Depth analysis pipeline",
+          "State management framework"
+        ],
+        requirements: [
+          { name: "GPU", details: "WebGL 2.0 compatible" },
+          { name: "Browser", details: "Modern browser with WebGL support" },
+          { name: "Memory", details: "4GB+ RAM recommended" },
+          { name: "Input", details: "Mouse/Touch input device" }
+        ]
+      }}
+      pipelineComponent={<SystemVisuals />}
+    />
   );
 };
 

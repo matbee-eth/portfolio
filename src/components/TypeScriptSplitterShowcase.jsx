@@ -1,136 +1,128 @@
 import React from 'react';
 import {
+  Code,
+  Storage,
+  Architecture,
+  Build,
+  Speed,
+  Analytics,
+  Hub,
+  Settings,
+} from '@mui/icons-material';
+import {
   Box,
-  Container,
-  Typography,
   Paper,
+  Typography,
   Grid,
   Chip,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Divider,
 } from '@mui/material';
-import {
-  Code,
-  Architecture,
-  Speed,
-  AutoGraph,
-  Schema,
-  AccountTree,
-  SyncAlt,
-  DataObject,
-  Hub,
-  Analytics,
-} from '@mui/icons-material';
+import { BaseShowcase } from './BaseShowcase';
 
-const FeatureSection = ({ title, icon: Icon, features }) => (
-  <Paper sx={{ p: 3, height: '100%' }}>
-    <Box display="flex" alignItems="center" mb={2}>
-      <Icon sx={{ mr: 1 }} />
-      <Typography variant="h6">{title}</Typography>
-    </Box>
-    <List>
-      {features.map((feature, index) => (
-        <ListItem key={index}>
-          <ListItemText primary={feature} />
-        </ListItem>
-      ))}
-    </List>
-  </Paper>
-);
-
-const TechStack = ({ technologies }) => (
-  <Box sx={{ mb: 4 }}>
-    <Typography variant="h6" gutterBottom>
-      Technology Stack
+const ProcessingPipeline = () => (
+  <Box mt={8}>
+    <Typography variant="h4" gutterBottom>
+      TypeScript Processing Pipeline
     </Typography>
-    <Box display="flex" flexWrap="wrap" gap={1}>
-      {technologies.map((tech, index) => (
-        <Chip
-          key={index}
-          label={tech}
-          variant="outlined"
-          color="primary"
-        />
-      ))}
-    </Box>
+    <Paper sx={{ p: 4, backgroundColor: 'grey.50' }}>
+      <Grid container spacing={3}>
+        {/* Input Stage */}
+        <Grid item xs={12}>
+          <Paper
+            elevation={3}
+            sx={{
+              p: 2,
+              backgroundColor: 'primary.dark',
+              color: 'white',
+              mb: 3,
+            }}
+          >
+            <Typography variant="h6" align="center" gutterBottom>
+              Input Processing
+            </Typography>
+            <Box display="flex" justifyContent="center" gap={2} flexWrap="wrap">
+              <Chip label="File Loading" size="small" />
+              <Chip label="AST Generation" size="small" />
+              <Chip label="Type Analysis" size="small" />
+            </Box>
+          </Paper>
+        </Grid>
+
+        {/* Processing Stage */}
+        <Grid item xs={12} md={6}>
+          <Paper
+            elevation={3}
+            sx={{
+              p: 2,
+              backgroundColor: 'success.main',
+              color: 'white',
+              height: '100%',
+            }}
+          >
+            <Typography variant="h6" align="center" gutterBottom>
+              Code Analysis
+            </Typography>
+            <Box component="ul" sx={{ pl: 2 }}>
+              <Box component="li" sx={{ mb: 1 }}>Dependency Graph</Box>
+              <Box component="li" sx={{ mb: 1 }}>Type Resolution</Box>
+              <Box component="li" sx={{ mb: 1 }}>Module Analysis</Box>
+              <Box component="li" sx={{ mb: 1 }}>Import/Export Tracking</Box>
+            </Box>
+          </Paper>
+        </Grid>
+
+        {/* Output Stage */}
+        <Grid item xs={12} md={6}>
+          <Paper
+            elevation={3}
+            sx={{
+              p: 2,
+              backgroundColor: 'info.main',
+              color: 'white',
+              height: '100%',
+            }}
+          >
+            <Typography variant="h6" align="center" gutterBottom>
+              Code Generation
+            </Typography>
+            <Box component="ul" sx={{ pl: 2 }}>
+              <Box component="li" sx={{ mb: 1 }}>Module Splitting</Box>
+              <Box component="li" sx={{ mb: 1 }}>Code Transformation</Box>
+              <Box component="li" sx={{ mb: 1 }}>Type Preservation</Box>
+              <Box component="li" sx={{ mb: 1 }}>File Generation</Box>
+            </Box>
+          </Paper>
+        </Grid>
+      </Grid>
+    </Paper>
   </Box>
 );
 
-const ProcessingPipeline = () => (
-  <Paper sx={{ p: 4, backgroundColor: 'grey.50' }}>
-    <Box sx={{ position: 'relative' }}>
-      {/* Input */}
-      <Paper
-        elevation={3}
-        sx={{
-          p: 2,
-          mb: 4,
-          backgroundColor: 'primary.dark',
-          color: 'white',
-        }}
-      >
-        <Typography variant="h6" align="center">TypeScript Source</Typography>
-        <Box display="flex" justifyContent="center" gap={2} mt={1}>
-          <Chip label="Classes" size="small" />
-          <Chip label="Interfaces" size="small" />
-          <Chip label="Functions" size="small" />
-        </Box>
-      </Paper>
-
-      {/* Processing */}
-      <Paper
-        elevation={3}
-        sx={{
-          p: 2,
-          mb: 4,
-          backgroundColor: 'primary.main',
-          color: 'white',
-        }}
-      >
-        <Typography variant="h6" align="center">Code Analysis</Typography>
-        <Box display="flex" justifyContent="center" gap={2} mt={1}>
-          <Chip label="AST Parsing" size="small" />
-          <Chip label="Dependency Analysis" size="small" />
-          <Chip label="Context Splitting" size="small" />
-        </Box>
-      </Paper>
-
-      {/* Output */}
-      <Paper
-        elevation={3}
-        sx={{
-          p: 2,
-          backgroundColor: 'primary.light',
-          color: 'white',
-        }}
-      >
-        <Typography variant="h6" align="center">Generated Output</Typography>
-        <Box display="flex" justifyContent="center" gap={2} mt={1}>
-          <Chip label="Code Chunks" size="small" />
-          <Chip label="Mermaid Diagrams" size="small" />
-          <Chip label="Knowledge Graph" size="small" />
-        </Box>
-      </Paper>
-    </Box>
-  </Paper>
-);
-
-const AnalysisFeatures = () => (
-  <Paper sx={{ p: 4, mt: 4 }}>
-    <Typography variant="h6" gutterBottom>
-      Code Analysis Features
+const TechnicalFeatures = () => (
+  <Box mt={8}>
+    <Typography variant="h4" gutterBottom>
+      Technical Features
     </Typography>
-    <Grid container spacing={2}>
+    <Grid container spacing={3}>
       {[
-        { label: 'Syntax Analysis', color: 'success.light', content: ['AST parsing', 'Type inference', 'Generic type handling'] },
-        { label: 'Dependency Tracking', color: 'warning.light', content: ['Import analysis', 'Export tracking', 'Variable usage detection'] },
-        { label: 'Visualization', color: 'info.light', content: ['Mermaid diagrams', 'Component relationships', 'Type hierarchies'] },
-      ].map(({ label, color, content }) => (
-        <Grid item xs={12} md={4} key={label}>
+        {
+          title: "AST Processing",
+          features: ["Parser integration", "Tree traversal", "Node analysis"],
+          color: "success.main"
+        },
+        {
+          title: "Type System",
+          features: ["Type inference", "Declaration handling", "Module types"],
+          color: "warning.main"
+        },
+        {
+          title: "Code Generation",
+          features: ["Module creation", "Import handling", "Type preservation"],
+          color: "info.main"
+        }
+      ].map(({ title, features, color }) => (
+        <Grid item xs={12} md={4} key={title}>
           <Paper
+            elevation={3}
             sx={{
               p: 2,
               height: '100%',
@@ -138,175 +130,113 @@ const AnalysisFeatures = () => (
               color: 'white',
             }}
           >
-            <Typography variant="subtitle1" gutterBottom align="center">
-              {label}
+            <Typography variant="h6" align="center" gutterBottom>
+              {title}
             </Typography>
-            <List dense>
-              {content.map((item) => (
-                <ListItem key={item}>
-                  <ListItemText primary={item} />
-                </ListItem>
+            <Box component="ul" sx={{ pl: 2 }}>
+              {features.map((feature, index) => (
+                <Box component="li" key={index} sx={{ mb: 1 }}>
+                  {feature}
+                </Box>
               ))}
-            </List>
+            </Box>
           </Paper>
         </Grid>
       ))}
     </Grid>
-  </Paper>
+  </Box>
 );
 
-const TypeScriptSplitterShowcase = () => {
+const SystemVisuals = () => (
+  <>
+    <ProcessingPipeline />
+    <TechnicalFeatures />
+  </>
+);
+
+const TypeScriptSplitterShowcase = ({ media }) => {
   const technologies = [
     'TypeScript',
     'Node.js',
-    'Mermaid.js',
-    'AST',
-    'DataLoader',
+    'AST Parser',
+    'Babel',
+    'Jest',
+    'ESLint',
+    'Prettier',
+    'Webpack',
   ];
 
-  const features = {
-    parsing: [
-      'AST-based code analysis',
-      'Type inference system',
-      'Generic type handling',
-      'React component detection',
-      'Export/import tracking',
-    ],
-    splitting: [
-      'Smart context splitting',
-      'Class/function boundaries',
-      'Size-based chunking',
-      'Dependency preservation',
-      'Code organization',
-    ],
-    analysis: [
-      'Import dependency tracking',
-      'Variable usage detection',
-      'Type relationship mapping',
-      'Component hierarchy analysis',
-      'Code structure visualization',
-    ],
-    visualization: [
-      'Mermaid diagram generation',
-      'Class relationships',
-      'Type hierarchies',
-      'Component dependencies',
-      'Knowledge graph export',
-    ],
-  };
+  const featureSections = [
+    {
+      title: 'Code Analysis',
+      icon: Code,
+      features: [
+        'AST parsing',
+        'Type inference',
+        'Dependency tracking',
+        'Module analysis',
+        'Import/export resolution',
+      ],
+    },
+    {
+      title: 'Type System',
+      icon: Storage,
+      features: [
+        'Type preservation',
+        'Declaration handling',
+        'Interface management',
+        'Generic support',
+        'Module types',
+      ],
+    },
+    {
+      title: 'Code Generation',
+      icon: Architecture,
+      features: [
+        'Module splitting',
+        'Code transformation',
+        'Import management',
+        'Type generation',
+        'Source maps',
+      ],
+    },
+    {
+      title: 'System Features',
+      icon: Build,
+      features: [
+        'Configuration options',
+        'Plugin system',
+        'Error handling',
+        'Progress tracking',
+        'Performance optimization',
+      ],
+    },
+  ];
 
   return (
-    <Container maxWidth="lg" sx={{ py: 8 }}>
-      {/* Project Header */}
-      <Box textAlign="center" mb={8}>
-        <Typography variant="h2" component="h1" gutterBottom>
-          TypeScript Code Analyzer & Splitter
-        </Typography>
-        <Typography variant="h5" color="text.secondary" paragraph>
-          Advanced TypeScript code analysis tool for intelligent code splitting, dependency tracking, and visual documentation generation.
-        </Typography>
-      </Box>
-
-      {/* Technology Stack */}
-      <TechStack technologies={technologies} />
-
-      <Divider sx={{ my: 6 }} />
-
-      {/* Processing Pipeline */}
-      <Box mb={8}>
-        <Typography variant="h4" gutterBottom>
-          Processing Pipeline
-        </Typography>
-        <ProcessingPipeline />
-      </Box>
-
-      {/* Analysis Features */}
-      <Box mb={8}>
-        <Typography variant="h4" gutterBottom>
-          Analysis Capabilities
-        </Typography>
-        <AnalysisFeatures />
-      </Box>
-
-      {/* Features Grid */}
-      <Grid container spacing={4}>
-        <Grid item xs={12} md={6}>
-          <FeatureSection
-            title="Code Parsing"
-            icon={Code}
-            features={features.parsing}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <FeatureSection
-            title="Context Splitting"
-            icon={AccountTree}
-            features={features.splitting}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <FeatureSection
-            title="Dependency Analysis"
-            icon={Hub}
-            features={features.analysis}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <FeatureSection
-            title="Visualization"
-            icon={AutoGraph}
-            features={features.visualization}
-          />
-        </Grid>
-      </Grid>
-
-      {/* Technical Details */}
-      <Box mt={8}>
-        <Typography variant="h4" gutterBottom>
-          Technical Implementation
-        </Typography>
-        <Paper sx={{ p: 4 }}>
-          <List>
-            <ListItem>
-              <ListItemIcon>
-                <Schema />
-              </ListItemIcon>
-              <ListItemText 
-                primary="AST Analysis" 
-                secondary="Deep TypeScript AST parsing for accurate code structure analysis and type inference"
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <SyncAlt />
-              </ListItemIcon>
-              <ListItemText 
-                primary="Smart Splitting" 
-                secondary="Intelligent code splitting that preserves context and maintains code relationships"
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <DataObject />
-              </ListItemIcon>
-              <ListItemText 
-                primary="Type System" 
-                secondary="Comprehensive type analysis including generics, interfaces, and React components"
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <Analytics />
-              </ListItemIcon>
-              <ListItemText 
-                primary="Visualization" 
-                secondary="Automated generation of Mermaid diagrams for code structure visualization"
-              />
-            </ListItem>
-          </List>
-        </Paper>
-      </Box>
-    </Container>
+    <BaseShowcase
+      title="TypeScript Module Splitter"
+      description="Advanced TypeScript code analysis and transformation tool for intelligent module splitting and organization."
+      media={media}
+      technologies={technologies}
+      featureSections={featureSections}
+      implementation={{
+        architecture: [
+          "AST-based analysis system",
+          "Type inference engine",
+          "Module transformation pipeline",
+          "Code generation system",
+          "Plugin architecture"
+        ],
+        requirements: [
+          { name: "Node.js", details: "14+ LTS version" },
+          { name: "TypeScript", details: "4.0+ compiler" },
+          { name: "Memory", details: "8GB+ RAM recommended" },
+          { name: "Storage", details: "SSD for better performance" }
+        ]
+      }}
+      pipelineComponent={<SystemVisuals />}
+    />
   );
 };
 

@@ -1,259 +1,157 @@
 import React from 'react';
 import {
-  Box,
-  Container,
-  Typography,
-  Paper,
-  Grid,
-  Chip,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Divider,
-} from '@mui/material';
-import {
-  Architecture,
-  Code,
   Search,
+  Architecture,
   Chat,
   Storage,
-  CheckCircle,
   Stream,
+  CheckCircle,
   Build,
 } from '@mui/icons-material';
-import TechnicalArchitecture from './TechnicalArchitecture';
-import RelatedProjects from './RelatedProjects';
-import { projectEmbeddings } from '../utils/precomputedEmbeddings';
+import { Box, Paper, Typography } from '@mui/material';
+import { BaseShowcase } from './BaseShowcase';
 
-const FeatureSection = ({ title, icon: Icon, features }) => (
-  <Paper sx={{ p: 3, height: '100%' }}>
-    <Box display="flex" alignItems="center" mb={2}>
-      <Icon sx={{ mr: 1 }} />
-      <Typography variant="h6">{title}</Typography>
-    </Box>
-    <List>
-      {features.map((feature, index) => (
-        <ListItem key={index}>
-          <ListItemIcon>
-            <CheckCircle color="success" fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary={feature} />
-        </ListItem>
-      ))}
-    </List>
-  </Paper>
-);
-
-const TechStack = ({ technologies }) => (
-  <Box sx={{ mb: 4 }}>
-    <Typography variant="h6" gutterBottom>
-      Technology Stack
+const PipelineFlow = () => (
+  <Box mt={8}>
+    <Typography variant="h4" gutterBottom>
+      Pipeline Flow
     </Typography>
-    <Box display="flex" flexWrap="wrap" gap={1}>
-      {technologies.map((tech, index) => (
-        <Chip
-          key={index}
-          label={tech}
-          variant="outlined"
-          color="primary"
-          icon={<Code />}
-        />
-      ))}
-    </Box>
+    <Paper sx={{ p: 4, backgroundColor: 'grey.50' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: 2,
+        }}
+      >
+        {[
+          { icon: Search, label: 'Query Analysis', description: 'Natural language processing of user queries' },
+          { icon: Stream, label: 'Decomposition', description: 'Breaking complex queries into subtasks' },
+          { icon: Storage, label: 'Search', description: 'Parallel Wikipedia article retrieval' },
+          { icon: CheckCircle, label: 'Fact Checking', description: 'LLM-based verification of results' },
+          { icon: Build, label: 'Result Export', description: 'Formatted output generation' },
+        ].map(({ icon: Icon, label, description }, index, array) => (
+          <Box
+            key={index}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 1,
+            }}
+          >
+            <Paper
+              sx={{
+                p: 2,
+                borderRadius: '50%',
+                backgroundColor: 'primary.main',
+                color: 'white',
+              }}
+            >
+              <Icon />
+            </Paper>
+            <Typography variant="body1" fontWeight="bold">{label}</Typography>
+            <Typography variant="body2" color="text.secondary" align="center" sx={{ maxWidth: 150 }}>
+              {description}
+            </Typography>
+            {index < array.length - 1 && (
+              <Typography variant="h5" color="primary" sx={{ mx: 2 }}>
+                →
+              </Typography>
+            )}
+          </Box>
+        ))}
+      </Box>
+    </Paper>
   </Box>
 );
 
-const WikiResearchShowcase = () => {
+const WikiResearchShowcase = ({ media }) => {
   const technologies = [
-    'Python 3.8+',
+    'Python',
+    'FastAPI',
+    'React',
+    'OpenAI',
+    'LangChain',
     'Streamlit',
     'asyncio',
-    'LLM Integration',
     'Plotly',
-    'Wikipedia API',
+    'Wikipedia API'
   ];
 
-  const features = {
-    core: [
-      'Advanced Query Processing',
-      'Real-time Fact Checking',
-      'Interactive Streaming Interface',
-      'Pipeline Architecture',
-      'LLM Integration',
-    ],
-    search: [
-      'Semantic search optimization',
-      'Query decomposition',
-      'Real-time results streaming',
-      'Fact validation',
-      'Result export functionality',
-    ],
-    interface: [
-      'Interactive query refinement',
-      'Real-time response streaming',
-      'Thread management',
-      'Progress visualization',
-      'Downloadable results',
-    ],
-    data: [
-      'Efficient data processing',
-      'Result caching',
-      'Export functionality',
-      'Session state management',
-      'Document analysis',
-    ],
-  };
+  const featureSections = [
+    {
+      title: "Core Features",
+      icon: Architecture,
+      features: [
+        "Advanced query processing with real-time fact checking",
+        "Interactive streaming interface with pipeline architecture",
+        "Semantic search optimization and query decomposition",
+        "Real-time results streaming with fact validation",
+        "Interactive query refinement and thread management",
+        "Efficient data processing with result caching"
+      ],
+    },
+    {
+      title: "Search Capabilities",
+      icon: Search,
+      features: [
+        "Natural language query understanding",
+        "Multi-source data integration",
+        "Semantic similarity matching",
+        "Real-time query refinement",
+        "Context-aware search"
+      ],
+    },
+    {
+      title: "Interactive Interface",
+      icon: Chat,
+      features: [
+        "Real-time streaming updates",
+        "Interactive query refinement",
+        "Progress visualization",
+        "Thread management",
+        "Result filtering"
+      ],
+    },
+    {
+      title: "Data Management",
+      icon: Storage,
+      features: [
+        "Efficient caching system",
+        "Result persistence",
+        "Data validation",
+        "Version tracking",
+        "Export capabilities"
+      ],
+    },
+  ];
 
   return (
-    <Container maxWidth="lg" sx={{ py: 8 }}>
-      {/* Project Header */}
-      <Box textAlign="center" mb={8}>
-        <Typography variant="h2" component="h1" gutterBottom>
-          Wiki Research Assistant
-        </Typography>
-        <Typography variant="h5" color="text.secondary" paragraph>
-          A sophisticated AI-powered research assistant that conducts thorough research using Wikipedia data with fact-checking capabilities.
-        </Typography>
-      </Box>
-
-      {/* Technology Stack */}
-      <TechStack technologies={technologies} />
-
-      <Divider sx={{ my: 6 }} />
-
-      {/* Features Grid */}
-      <Grid container spacing={4}>
-        <Grid item xs={12} md={6}>
-          <FeatureSection
-            title="Core Features"
-            icon={Architecture}
-            features={features.core}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <FeatureSection
-            title="Search Capabilities"
-            icon={Search}
-            features={features.search}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <FeatureSection
-            title="Interactive Interface"
-            icon={Chat}
-            features={features.interface}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <FeatureSection
-            title="Data Management"
-            icon={Storage}
-            features={features.data}
-          />
-        </Grid>
-      </Grid>
-
-      {/* Technical Architecture */}
-      <Box mt={8}>
-        <Typography variant="h4" gutterBottom>
-          Technical Architecture
-        </Typography>
-        <TechnicalArchitecture />
-      </Box>
-
-      {/* Pipeline Flow */}
-      <Box mt={8}>
-        <Typography variant="h4" gutterBottom>
-          Pipeline Flow
-        </Typography>
-        <Paper sx={{ p: 4, backgroundColor: 'grey.50' }}>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              flexWrap: 'wrap',
-              gap: 2,
-            }}
-          >
-            {[
-              { icon: Search, label: 'Query Analysis' },
-              { icon: Stream, label: 'Decomposition' },
-              { icon: Storage, label: 'Search' },
-              { icon: CheckCircle, label: 'Fact Checking' },
-              { icon: Build, label: 'Result Export' },
-            ].map(({ icon: Icon, label }, index) => (
-              <Box
-                key={index}
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: 1,
-                }}
-              >
-                <Icon fontSize="large" color="primary" />
-                <Typography variant="body2">{label}</Typography>
-                {index < 4 && (
-                  <Typography variant="h5" color="primary" sx={{ mx: 2 }}>
-                    →
-                  </Typography>
-                )}
-              </Box>
-            ))}
-          </Box>
-        </Paper>
-      </Box>
-
-      {/* System Requirements */}
-      <Box mt={8}>
-        <Typography variant="h4" gutterBottom>
-          System Requirements & Setup
-        </Typography>
-        <Paper sx={{ p: 3 }}>
-          <List>
-            <ListItem>
-              <ListItemIcon>
-                <CheckCircle color="success" />
-              </ListItemIcon>
-              <ListItemText 
-                primary="Python 3.8+" 
-                secondary="Required for running the application"
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <CheckCircle color="success" />
-              </ListItemIcon>
-              <ListItemText 
-                primary="Environment Variables" 
-                secondary="Configure using .env file"
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <CheckCircle color="success" />
-              </ListItemIcon>
-              <ListItemText 
-                primary="Dependencies" 
-                secondary="Install using: pip install -r requirements.txt"
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <CheckCircle color="success" />
-              </ListItemIcon>
-              <ListItemText 
-                primary="Memory Requirements" 
-                secondary="Sufficient memory for LLM operations"
-              />
-            </ListItem>
-          </List>
-        </Paper>
-      </Box>      
-      <RelatedProjects projectsWithEmbeddings={projectEmbeddings} />
-    </Container>
+    <BaseShowcase
+      title="Wiki Research Assistant"
+      description="A sophisticated AI-powered research assistant that conducts thorough research using Wikipedia data with fact-checking capabilities."
+      media={media}
+      technologies={technologies}
+      featureSections={featureSections}
+      implementation={{
+        architecture: [
+          "Modular pipeline design with async processing",
+          "LLM integration for query understanding",
+          "Distributed caching system",
+          "Real-time WebSocket updates"
+        ],
+        requirements: [
+          { name: "Python 3.8+", details: "Required for running the application" },
+          { name: "Environment Variables", details: "Configure using .env file" },
+          { name: "Dependencies", details: "Install using: pip install -r requirements.txt" },
+          { name: "Memory", details: "Sufficient memory for LLM operations" }
+        ]
+      }}
+      pipelineComponent={<PipelineFlow />}
+    />
   );
 };
 

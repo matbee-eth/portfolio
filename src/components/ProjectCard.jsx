@@ -1,7 +1,30 @@
-import { Card, CardActionArea, CardContent, Typography, Box, Chip, Stack } from '@mui/material';
+import { Card, CardActionArea, CardContent, Typography, Box, Chip, Stack, Divider } from '@mui/material';
 import { GitHubRepoLink } from './GitHubCard';
 
-export default function ProjectCard({ title, description, icon: Icon, onClick, tags, techStack, githubUrl }) {
+const renderImplementation = (implementation) => {
+  if (typeof implementation === 'string') {
+    return implementation;
+  }
+  if (implementation?.architecture) {
+    return implementation.architecture.join(' • ');
+  }
+  return null;
+};
+
+export default function ProjectCard({ 
+  title, 
+  description, 
+  icon: Icon, 
+  onClick, 
+  tags, 
+  techStack, 
+  githubUrl,
+  features,
+  implementation,
+  topics
+}) {
+  const implementationText = renderImplementation(implementation);
+  
   return (
     <Card
       sx={{
@@ -21,7 +44,7 @@ export default function ProjectCard({ title, description, icon: Icon, onClick, t
           display: 'flex', 
           alignItems: 'stretch',
           '& .MuiCardContent-root': {
-            pb: '16px !important' // Override Material-UI's default padding removal
+            pb: '16px !important'
           }
         }}
       >
@@ -49,13 +72,32 @@ export default function ProjectCard({ title, description, icon: Icon, onClick, t
           <Typography 
             variant="body2" 
             color="text.secondary" 
-            sx={{ 
-              minHeight: '2.5em',
-              lineHeight: 1.5
-            }}
+            sx={{ lineHeight: 1.5 }}
           >
             {description}
           </Typography>
+
+          {features && features.length > 0 && (
+            <>
+              <Divider textAlign="left">
+                <Typography variant="caption" color="text.secondary">Features</Typography>
+              </Divider>
+              <Typography variant="body2" color="text.secondary">
+                {features.join(' • ')}
+              </Typography>
+            </>
+          )}
+{/* 
+          {implementationText && (
+            <>
+              <Divider textAlign="left">
+                <Typography variant="caption" color="text.secondary">Implementation</Typography>
+              </Divider>
+              <Typography variant="body2" color="text.secondary">
+                {implementationText}
+              </Typography>
+            </>
+          )} */}
 
           {tags && tags.length > 0 && (
             <Stack 
@@ -70,9 +112,12 @@ export default function ProjectCard({ title, description, icon: Icon, onClick, t
                   key={index}
                   label={tag}
                   size="small"
-                  color="primary"
-                  variant="outlined"
-                  sx={{ height: 24 }}
+                  sx={{
+                    backgroundColor: 'rgba(0, 0, 0, 0.08)',
+                    '&:hover': {
+                      backgroundColor: 'rgba(0, 0, 0, 0.12)'
+                    }
+                  }}
                 />
               ))}
             </Stack>
@@ -84,7 +129,7 @@ export default function ProjectCard({ title, description, icon: Icon, onClick, t
               spacing={1} 
               flexWrap="wrap" 
               useFlexGap 
-              sx={{ gap: '8px !important' }}
+              sx={{ mt: 'auto', pt: 1, gap: '4px !important' }}
             >
               {techStack.map((tech, index) => (
                 <Chip
@@ -92,7 +137,10 @@ export default function ProjectCard({ title, description, icon: Icon, onClick, t
                   label={tech}
                   size="small"
                   variant="outlined"
-                  sx={{ height: 24 }}
+                  sx={{ 
+                    borderColor: 'rgba(0, 0, 0, 0.12)',
+                    fontSize: '0.75rem'
+                  }}
                 />
               ))}
             </Stack>

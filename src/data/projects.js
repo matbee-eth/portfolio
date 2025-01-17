@@ -34,11 +34,42 @@ export const projects = [
   },
   {
     title: "Wiki Research Assistant",
-    description: "AI-powered research assistant that helps users explore and understand Wikipedia articles through natural language queries.",
+    description: "A sophisticated AI-powered research assistant that conducts thorough research using Wikipedia data with fact-checking capabilities.",
     icon: Search,
     route: "wiki-research",
     tags: ["AI", "NLP", "Research"],
-    techStack: ["Python", "FastAPI", "React", "OpenAI", "LangChain"],
+    techStack: ["Python", "FastAPI", "React", "OpenAI", "LangChain", "Streamlit", "asyncio", "Plotly", "Wikipedia API"],
+    githubUrl: "https://github.com/matbee-eth/wiki-research",
+    features: [
+      "Advanced query processing with real-time fact checking",
+      "Interactive streaming interface with pipeline architecture",
+      "Semantic search optimization and query decomposition",
+      "Real-time results streaming with fact validation",
+      "Interactive query refinement and thread management",
+      "Efficient data processing with result caching"
+    ],
+    implementation: {
+      architecture: [
+        "Modular pipeline design with async processing",
+        "LLM integration for query understanding",
+        "Distributed caching system",
+        "Real-time WebSocket updates"
+      ],
+      pipeline: [
+        { step: "Query Analysis", description: "Natural language processing of user queries" },
+        { step: "Decomposition", description: "Breaking complex queries into subtasks" },
+        { step: "Search", description: "Parallel Wikipedia article retrieval" },
+        { step: "Fact Checking", description: "LLM-based verification of results" },
+        { step: "Result Export", description: "Formatted output generation" }
+      ],
+      requirements: [
+        { name: "Python 3.8+", details: "Required for running the application" },
+        { name: "Environment Variables", details: "Configure using .env file" },
+        { name: "Dependencies", details: "Install using: pip install -r requirements.txt" },
+        { name: "Memory", details: "Sufficient memory for LLM operations" }
+      ]
+    },
+    topics: ["Research Tools", "AI Assistants", "Natural Language Processing", "Information Retrieval"],
     category: "AI & Computer Vision"
   },
   {
