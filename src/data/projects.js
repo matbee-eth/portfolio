@@ -10,7 +10,8 @@ import {
   Storage,
   Visibility,
   PieChart,
-  Web
+  Web,
+  Brush
 } from '@mui/icons-material';
 
 export const projects = [
@@ -206,6 +207,25 @@ export const projects = [
     techStack: ["TypeScript", "D3.js", "Node.js", "Neo4j"],
     githubUrl: "https://github.com/matbee-eth/webpack-plugin-knowledge-graph",
     category: "Developer Tools"
+  },
+  {
+    title: "Generative Image Canvas",
+    description: "An advanced image editing canvas that combines the power of KonvaJS with AI-driven image generation. Features a responsive design, intuitive controls, and seamless integration with generative AI for creative image manipulation.",
+    icon: Brush,
+    route: "generative-image-canvas",
+    tags: ["AI", "Canvas", "Image Editing"],
+    techStack: ["React", "TypeScript", "KonvaJS", "Context API", "Generative AI"],
+    features: [
+      "AI-powered image generation with natural language prompts",
+      "Interactive canvas with drag-and-drop support",
+      "Multiple image layers with transformations",
+      "Dynamic layout system with responsive scaling",
+      "Real-time preview and editing",
+      "Smart dimension handling and aspect ratio support"
+    ],
+    implementation: "Built with React and TypeScript, utilizing KonvaJS for canvas manipulation and integrating with generative AI services for image creation. Features a robust state management system using Context API and custom hooks.",
+    topics: ["Image Processing", "AI Integration", "UI/UX Design"],
+    category: "AI & Computer Vision"
   }
 ];
 

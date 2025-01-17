@@ -26,6 +26,7 @@ import LLMDebuggerPage from './routes/LLMDebuggerPage';
 import PosePlacerPage from './routes/PosePlacerPage';
 import Object3DPage from './routes/Object3DPage';
 import WebpackGraphPage from './routes/WebpackGraphPage';
+import GenerativeImageCanvasPage from './routes/GenerativeImageCanvasPage';
 
 function FeaturedProject({ title, description, icon, route, tags, techStack, githubUrl, features, implementation, topics }) {
   const navigate = useNavigate();
@@ -267,6 +268,7 @@ export default function App() {
             <Route path="pose-placer" element={<PosePlacerPage />} />
             <Route path="object-3d" element={<Object3DPage />} />
             <Route path="webpack-graph" element={<WebpackGraphPage />} />
+            <Route path="generative-image-canvas" element={<GenerativeImageCanvasPage />} />
           </Route>
         </Routes>
       </Container>
