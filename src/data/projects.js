@@ -40,7 +40,7 @@ export const projects = [
     route: "wiki-research",
     tags: ["AI", "NLP", "Research"],
     techStack: ["Python", "FastAPI", "React", "OpenAI", "LangChain", "Streamlit", "asyncio", "Plotly", "Wikipedia API"],
-    githubUrl: "https://github.com/matbee-eth/wiki-research",
+    githubUrl: "https://github.com/matbee-eth/wiki-research-assistant",
     features: [
       "Advanced query processing with real-time fact checking",
       "Interactive streaming interface with pipeline architecture",

@@ -12,9 +12,13 @@ import {
   ListItemText,
   Card,
   CardMedia,
+  CardContent,
+  Button,
   Divider,
 } from '@mui/material';
-import { Code, Circle } from '@mui/icons-material';
+import { Code, Circle, GitHub } from '@mui/icons-material';
+import { useLocation } from 'react-router-dom';
+import { getProjectByRoute } from '../data/projects';
 
 const FeatureSection = ({ title, icon: Icon, features }) => (
   <Paper sx={{ p: 3, height: '100%' }}>
@@ -95,79 +99,6 @@ const MediaPreview = ({ media }) => {
   );
 };
 
-const Requirements = ({ requirements }) => {
-  if (!requirements) return null;
-
-  return (
-    <Box mt={8}>
-      <Typography variant="h4" gutterBottom>
-        System Requirements & Setup
-      </Typography>
-      <Paper sx={{ p: 3 }}>
-        <List>
-          {requirements.map(({ name, details }, index) => (
-            <ListItem key={index} dense>
-              <ListItemIcon>
-                <Circle 
-                  sx={{ 
-                    fontSize: '8px',
-                    color: 'text.secondary',
-                    opacity: 0.5
-                  }} 
-                />
-              </ListItemIcon>
-              <ListItemText 
-                primary={name}
-                secondary={details}
-                primaryTypographyProps={{
-                  variant: 'body2',
-                  color: 'text.primary'
-                }}
-              />
-            </ListItem>
-          ))}
-        </List>
-      </Paper>
-    </Box>
-  );
-};
-
-const Architecture = ({ architecture }) => {
-  if (!architecture) return null;
-
-  return (
-    <Box mt={8}>
-      <Typography variant="h4" gutterBottom>
-        Technical Architecture
-      </Typography>
-      <Paper sx={{ p: 3 }}>
-        <List>
-          {architecture.map((item, index) => (
-            <ListItem key={index} dense>
-              <ListItemIcon>
-                <Circle 
-                  sx={{ 
-                    fontSize: '8px',
-                    color: 'text.secondary',
-                    opacity: 0.5
-                  }} 
-                />
-              </ListItemIcon>
-              <ListItemText 
-                primary={item}
-                primaryTypographyProps={{
-                  variant: 'body2',
-                  color: 'text.primary'
-                }}
-              />
-            </ListItem>
-          ))}
-        </List>
-      </Paper>
-    </Box>
-  );
-};
-
 const BaseShowcase = ({
   title,
   description,
@@ -178,21 +109,44 @@ const BaseShowcase = ({
   pipelineComponent,
   children
 }) => {
+  const location = useLocation();
+  const route = location.pathname.split('/').pop();
+  const project = getProjectByRoute(route);
+  console.log(project, project?.githubUrl, route);
   return (
     <Container maxWidth="lg" sx={{ py: 8 }}>
-      <Box textAlign="center" mb={8}>
-        <Typography variant="h2" component="h1" gutterBottom>
-          {title}
-        </Typography>
-        {description && (
-          <Typography variant="h5" color="text.secondary" paragraph>
-            {description}
-          </Typography>
-        )}
-      </Box>
+      <Typography variant="h4" component="h1" gutterBottom>
+        {title}
+      </Typography>
+      <Typography variant="body1" paragraph>
+        {description}
+      </Typography>
 
       <MediaPreview media={media} />
-      
+
+      {project?.githubUrl && (
+        <Box sx={{ mb: 4 }}>
+          <Card variant="outlined">
+            <CardContent>
+              <Box display="flex" alignItems="center" gap={1}>
+                <GitHub />
+                <Typography variant="h6">Github Repository</Typography>
+              </Box>
+              <Button 
+                variant="contained" 
+                startIcon={<GitHub />}
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{ mt: 2 }}
+              >
+                View on Github
+              </Button>
+            </CardContent>
+          </Card>
+        </Box>
+      )}
+
       <TechStack technologies={technologies} />
 
       <Divider sx={{ my: 6 }} />
@@ -212,11 +166,68 @@ const BaseShowcase = ({
       {implementation && (
         <>
           {implementation.architecture && (
-            <Architecture architecture={implementation.architecture} />
+            <Box mt={8}>
+              <Typography variant="h4" gutterBottom>
+                Technical Architecture
+              </Typography>
+              <Paper sx={{ p: 3 }}>
+                <List>
+                  {implementation.architecture.map((item, index) => (
+                    <ListItem key={index} dense>
+                      <ListItemIcon>
+                        <Circle 
+                          sx={{ 
+                            fontSize: '8px',
+                            color: 'text.secondary',
+                            opacity: 0.5
+                          }} 
+                        />
+                      </ListItemIcon>
+                      <ListItemText 
+                        primary={item}
+                        primaryTypographyProps={{
+                          variant: 'body2',
+                          color: 'text.primary'
+                        }}
+                      />
+                    </ListItem>
+                  ))}
+                </List>
+              </Paper>
+            </Box>
           )}
           {pipelineComponent}
           {implementation.requirements && (
-            <Requirements requirements={implementation.requirements} />
+            <Box mt={8}>
+              <Typography variant="h4" gutterBottom>
+                System Requirements & Setup
+              </Typography>
+              <Paper sx={{ p: 3 }}>
+                <List>
+                  {implementation.requirements.map(({ name, details }, index) => (
+                    <ListItem key={index} dense>
+                      <ListItemIcon>
+                        <Circle 
+                          sx={{ 
+                            fontSize: '8px',
+                            color: 'text.secondary',
+                            opacity: 0.5
+                          }} 
+                        />
+                      </ListItemIcon>
+                      <ListItemText 
+                        primary={name}
+                        secondary={details}
+                        primaryTypographyProps={{
+                          variant: 'body2',
+                          color: 'text.primary'
+                        }}
+                      />
+                    </ListItem>
+                  ))}
+                </List>
+              </Paper>
+            </Box>
           )}
         </>
       )}

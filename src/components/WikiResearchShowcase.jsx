@@ -10,6 +10,7 @@ import {
 } from '@mui/icons-material';
 import { Box, Paper, Typography } from '@mui/material';
 import { BaseShowcase } from './BaseShowcase';
+import { getProjectByRoute } from '../data/projects';
 
 const PipelineFlow = () => (
   <Box mt={8}>
@@ -69,30 +70,13 @@ const PipelineFlow = () => (
 );
 
 const WikiResearchShowcase = ({ media }) => {
-  const technologies = [
-    'Python',
-    'FastAPI',
-    'React',
-    'OpenAI',
-    'LangChain',
-    'Streamlit',
-    'asyncio',
-    'Plotly',
-    'Wikipedia API'
-  ];
-
+  const project = getProjectByRoute('wiki-research');
+  
   const featureSections = [
     {
       title: "Core Features",
       icon: Architecture,
-      features: [
-        "Advanced query processing with real-time fact checking",
-        "Interactive streaming interface with pipeline architecture",
-        "Semantic search optimization and query decomposition",
-        "Real-time results streaming with fact validation",
-        "Interactive query refinement and thread management",
-        "Efficient data processing with result caching"
-      ],
+      features: project.features,
     },
     {
       title: "Search Capabilities",
@@ -131,10 +115,10 @@ const WikiResearchShowcase = ({ media }) => {
 
   return (
     <BaseShowcase
-      title="Wiki Research Assistant"
-      description="A sophisticated AI-powered research assistant that conducts thorough research using Wikipedia data with fact-checking capabilities."
+      title={project.title}
+      description={project.description}
       media={media}
-      technologies={technologies}
+      technologies={project.techStack}
       featureSections={featureSections}
       implementation={{
         architecture: [
