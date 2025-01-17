@@ -44,31 +44,46 @@ export const generateProjectEmbeddings = async (projects) => {
     const searchText = [
       project.title,
       project.description,
-      project.techStack?.join(' ') || '',
-      project.category || ''
+      project.tags?.join(' '),
+      project.techStack?.join(' '),
+      project.features?.join(' '),
+      typeof project.implementation === 'string' 
+        ? project.implementation 
+        : project.implementation?.architecture?.join(' '),
+      project.topics?.join(' '),
+      project.category
     ].filter(Boolean).join(' ');
-    
-    // Generate and store embedding by route
-    embeddings[project.route] = {
-      embedding: await generateEmbedding(searchText),
-      searchText
-    };
+
+    try {
+      const embedding = await generateEmbedding(searchText);
+      embeddings[project.route] = {
+        title: project.title,
+        embedding: embedding
+      };
+    } catch (error) {
+      console.error(`Error generating embedding for project ${project.title}:`, error);
+    }
   }
-  
-  // Then generate embeddings for all categories
-  const categoryDescriptions = {
-    'AI & Computer Vision': 'Artificial intelligence, machine learning, computer vision, neural networks, deep learning, image processing, object detection, facial recognition',
-    '3D & Interactive': '3D modeling, visualization, interactive graphics, rendering, real-time, WebGL, Three.js, animation, user interaction',
-    'Developer Tools': 'Development tools, programming, coding, debugging, analysis, IDE, compiler, productivity, automation',
-    'Research & Analysis': 'Research, analysis, data mining, information extraction, knowledge discovery, visualization, insights'
+
+  // Also generate embeddings for categories
+  const categories = {
+    'AI & Computer Vision': 'artificial intelligence machine learning computer vision neural networks deep learning',
+    '3D & Interactive': '3d modeling visualization interactive graphics rendering real-time',
+    'Developer Tools': 'development tools programming coding debugging analysis IDE compiler',
+    'Research & Analysis': 'research analysis data mining information extraction knowledge discovery'
   };
 
-  for (const [category, description] of Object.entries(categoryDescriptions)) {
-    embeddings[category] = {
-      embedding: await generateEmbedding(description),
-      searchText: description
-    };
+  for (const [category, text] of Object.entries(categories)) {
+    try {
+      const embedding = await generateEmbedding(text);
+      embeddings[category] = {
+        title: category,
+        embedding: embedding
+      };
+    } catch (error) {
+      console.error(`Error generating embedding for category ${category}:`, error);
+    }
   }
-  
+
   return embeddings;
 };

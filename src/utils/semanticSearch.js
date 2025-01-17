@@ -1,5 +1,7 @@
 import * as tf from '@tensorflow/tfjs';
 import { load } from '@tensorflow-models/universal-sentence-encoder';
+import { projectEmbeddings } from './precomputedEmbeddings';
+import { generateEmbedding } from './embeddings.server.js';
 
 let model = null;
 let modelLoading = false;
@@ -27,14 +29,15 @@ const getEmbedding = async (text) => {
   return embedding[0];
 };
 
+// Calculate cosine similarity between two vectors
 const cosineSimilarity = (a, b) => {
-  const dotProduct = tf.sum(tf.mul(a, b));
-  const normA = tf.norm(a);
-  const normB = tf.norm(b);
-  const similarity = tf.div(dotProduct, tf.mul(normA, normB));
-  const value = similarity.dataSync()[0];
-  tf.dispose([dotProduct, normA, normB, similarity]);
-  return value;
+  if (!a || !b || a.length !== b.length) return 0;
+  
+  const dotProduct = a.reduce((sum, ai, i) => sum + ai * b[i], 0);
+  const magnitudeA = Math.sqrt(a.reduce((sum, ai) => sum + ai * ai, 0));
+  const magnitudeB = Math.sqrt(b.reduce((sum, bi) => sum + bi * bi, 0));
+  
+  return magnitudeA && magnitudeB ? dotProduct / (magnitudeA * magnitudeB) : 0;
 };
 
 // Category definitions with their embeddings key names
@@ -59,39 +62,38 @@ const CATEGORIES = {
 
 // Find the best matching category for a project based on its embedding
 const findBestCategory = (projectEmbedding) => {
+  if (!projectEmbedding) return 'Other Projects';
+  
   const categories = Object.keys(CATEGORIES);
-
   let bestScore = -1;
   let bestCategory = 'Other Projects';
 
   for (const category of categories) {
-    const categoryData = CATEGORIES[category];
-    if (!categoryData || !categoryData.key) continue;
+    const categoryData = projectEmbeddings[CATEGORIES[category].key];
+    if (!categoryData?.embedding) continue;
 
-    const similarity = cosineSimilarity(projectEmbedding, categoryData.key);
+    const similarity = cosineSimilarity(projectEmbedding, categoryData.embedding);
     if (similarity > bestScore) {
       bestScore = similarity;
       bestCategory = category;
     }
   }
 
-  // Only assign a category if the similarity score is above a threshold
-  return bestScore > CATEGORIES[bestCategory].threshold ? bestCategory : 'Other Projects';
+  const threshold = CATEGORIES[bestCategory]?.threshold ?? 0.3;
+  return bestScore > threshold ? bestCategory : 'Other Projects';
 };
 
 // Find best category for a project
 const findBestCategoryForProject = async (project) => {
-  if (!project) return 'Other Projects';
-
-  const projectText = `${project.title} ${project.description} ${project.tags.join(' ')} ${project.topics.join(' ')}`;
-  const projectEmbedding = await getEmbedding(projectText);
-
-  return findBestCategory(projectEmbedding);
+  if (!project?.route || !projectEmbeddings[project.route]?.embedding) {
+    return 'Other Projects';
+  }
+  return findBestCategory(projectEmbeddings[project.route].embedding);
 };
 
 // Get projects for a category
 export const getRelevantProjects = async (category, projects) => {
-  if (!category || !projects) return [];
+  if (!category || !projects?.length) return [];
 
   // First, find the best category for each project
   const projectCategories = await Promise.all(
@@ -114,30 +116,42 @@ export const getRelevantProjects = async (category, projects) => {
     .map(({ project }) => project);
 };
 
-export const semanticSearch = async (query, projects) => {
-  const queryEmbedding = await getEmbedding(query);
+// Search for projects based on a query embedding
+export const semanticSearch = async (query, projects, limit = 5) => {
+  if (!query?.trim() || !Array.isArray(projects) || !projects.length) {
+    console.error('Invalid input for semanticSearch');
+    return [];
+  }
 
-  // Create embeddings for project texts
-  const projectTexts = projects.map(project => 
-    `${project.title} ${project.description} ${project.tags.join(' ')} ${project.topics.join(' ')}`
-  );
-  
-  const projectEmbeddings = await Promise.all(
-    projectTexts.map(text => getEmbedding(text))
-  );
+  try {
+    // Generate embedding for the search query
+    const queryEmbedding = await generateEmbedding(query);
+    if (!queryEmbedding) {
+      console.error('Failed to generate query embedding');
+      return [];
+    }
 
-  // Calculate similarities
-  const similarities = projectEmbeddings.map(embedding => 
-    cosineSimilarity(tf.tensor1d(queryEmbedding), tf.tensor1d(embedding))
-  );
+    // Compare query embedding with all project embeddings
+    const results = projects
+      .map(project => {
+        if (!project?.route) return null;
+        const projectData = projectEmbeddings[project.route];
+        if (!projectData?.embedding) return null;
 
-  // Sort projects by similarity
-  const projectsWithScores = projects.map((project, i) => ({
-    ...project,
-    score: similarities[i]
-  }));
+        const similarity = cosineSimilarity(queryEmbedding, projectData.embedding);
+        return { project, similarity };
+      })
+      .filter(Boolean)
+      .filter(result => result.similarity > 0.2)
+      .sort((a, b) => b.similarity - a.similarity)
+      .slice(0, limit);
 
-  return projectsWithScores
-    .sort((a, b) => b.score - a.score)
-    .filter(project => project.score > 0.3); // Only return reasonably relevant results
+    return results.map(({ project, similarity }) => ({
+      ...project,
+      relevanceScore: similarity
+    }));
+  } catch (error) {
+    console.error('Error during semantic search:', error);
+    return [];
+  }
 };
