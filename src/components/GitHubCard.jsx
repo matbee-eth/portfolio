@@ -7,10 +7,13 @@ import {
   Link,
   Skeleton,
   Chip,
-  Stack
+  Stack,
+  IconButton,
+  Tooltip
 } from '@mui/material';
 import { GitHub, LocationOn, Link as LinkIcon } from '@mui/icons-material';
 
+// Component for the full GitHub profile card
 export default function GitHubCard({ username }) {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -104,5 +107,23 @@ export default function GitHubCard({ username }) {
         </Box>
       </Box>
     </Paper>
+  );
+}
+
+// Simple component for repository links in project cards
+export function GitHubRepoLink({ repoUrl }) {
+  return (
+    <Tooltip title="View on GitHub">
+      <IconButton
+        component={Link}
+        href={repoUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        size="small"
+        sx={{ color: 'text.secondary' }}
+      >
+        <GitHub />
+      </IconButton>
+    </Tooltip>
   );
 }
